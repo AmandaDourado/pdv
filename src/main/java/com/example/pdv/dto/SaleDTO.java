@@ -6,7 +6,7 @@ public class SaleDTO {
 
     private Long userid;
 
-    List<ProductDTO> items;
+    List<ProductSaleDTO> items;
 
     public Long getUserid() {
         return userid;
@@ -16,11 +16,11 @@ public class SaleDTO {
         this.userid = userid;
     }
 
-    public List<ProductDTO> getItems() {
+    public List<ProductSaleDTO> getItems() {
         return items;
     }
 
-    public void setItems(List<ProductDTO> items) {
+    public void setItems(List<ProductSaleDTO> items) {
         this.items = items;
     }
 }

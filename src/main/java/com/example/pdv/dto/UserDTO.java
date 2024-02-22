@@ -1,5 +1,7 @@
 package com.example.pdv.dto;
 
+import com.example.pdv.entity.User;
+
 public class UserDTO {
 
     private Long id;

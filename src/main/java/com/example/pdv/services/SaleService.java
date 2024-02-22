@@ -1,6 +1,6 @@
 package com.example.pdv.services;
 
-import com.example.pdv.dto.ProductDTO;
+import com.example.pdv.dto.ProductSaleDTO;
 import com.example.pdv.dto.ProductInfoDTO;
 import com.example.pdv.dto.SaleDTO;
 import com.example.pdv.dto.SaleInfoDTO;
@@ -18,6 +18,7 @@ import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
@@ -44,12 +45,25 @@ public class SaleService {
 
 
     private SaleInfoDTO getSaleInfo(Sale sale) {
+        var products = getProductInfo(sale.getItems());
+        BigDecimal total = getTotal(products);
+
         SaleInfoDTO saleInfoDTO = new SaleInfoDTO();
         saleInfoDTO.setUser(sale.getUser().getName());
         saleInfoDTO.setDate(sale.getDate().format(DateTimeFormatter.ofPattern("dd//MM/yyyy")));
-        saleInfoDTO.setProducts(getProductInfo(sale.getItems()));
+        saleInfoDTO.setProducts(products);
+        saleInfoDTO.setTotal(total);
+        saleInfoDTO.setTotal(total);
 
         return saleInfoDTO;
+    }
+
+    private BigDecimal getTotal(List<ProductInfoDTO> products) {
+        BigDecimal total = new BigDecimal(0);
+        for(int i = 0; i < products.size(); i++){
+            total = total.add(products.get(i).getPrice().multiply(new BigDecimal(products.get(i).getQuantity())));
+        }
+        return total;
     }
 
     private List<ProductInfoDTO> getProductInfo(List<ItemSale> items) {
@@ -58,6 +72,7 @@ public class SaleService {
             productInfoDTO.setId(item.getId());
             productInfoDTO.setDescription(item.getProduct().getDescription());
             productInfoDTO.setQuantity(item.getQuantity());
+            productInfoDTO.setPrice(item.getProduct().getPrice());
             return productInfoDTO;
         }).collect(Collectors.toList());
     }
@@ -84,7 +99,7 @@ public class SaleService {
         }
     }
 
-    private List<ItemSale> getItemSale(List<ProductDTO> products) {
+    private List<ItemSale> getItemSale(List<ProductSaleDTO> products) {
         if(products.isEmpty()){
             throw new InvalidOperationException("Não é possível adicionar a venda sem itens");
         }

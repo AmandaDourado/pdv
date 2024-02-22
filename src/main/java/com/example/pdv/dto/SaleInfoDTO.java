@@ -1,11 +1,13 @@
 package com.example.pdv.dto;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 public class SaleInfoDTO {
 
     private String user;
     private String date;
+    private BigDecimal total;
     private List<ProductInfoDTO> products;
 
     public String getUser() {
@@ -22,6 +24,14 @@ public class SaleInfoDTO {
 
     public void setDate(String date) {
         this.date = date;
+    }
+
+    public BigDecimal getTotal() {
+        return total;
+    }
+
+    public void setTotal(BigDecimal total) {
+        this.total = total;
     }
 
     public List<ProductInfoDTO> getProducts() {

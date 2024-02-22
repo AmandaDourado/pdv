@@ -1,16 +1,36 @@
 package com.example.pdv.dto;
 
+import java.math.BigDecimal;
+
 public class ProductDTO {
 
-    private long productid;
+    private Long id;
+    private String description;
+    private BigDecimal price;
     private int quantity;
 
-    public long getProductid() {
-        return productid;
+    public Long getId() {
+        return id;
     }
 
-    public void setProductid(long productid) {
-        this.productid = productid;
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public BigDecimal getPrice() {
+        return price;
+    }
+
+    public void setPrice(BigDecimal price) {
+        this.price = price;
     }
 
     public int getQuantity() {
